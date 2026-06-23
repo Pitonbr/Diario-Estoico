@@ -1,0 +1,38 @@
+{
+  "name": "diario-estoico",
+  "version": "1.0.0",
+  "description": "Agente autônomo que envia newsletter diária sobre Estoicismo com cruzamento de eventos atuais",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "send": "tsx src/index.ts",
+    "preview": "tsx src/preview.ts",
+    "migrate": "tsx src/database/migrate.ts",
+    "seed": "tsx src/database/seed.ts",
+    "test": "tsx src/test.ts"
+  },
+  "keywords": ["stoicism", "newsletter", "daily", "philosophy"],
+  "author": "Pitonbr",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@react-email/components": "^0.0.31",
+    "@react-email/render": "^1.0.4",
+    "@supabase/supabase-js": "^2.49.1",
+    "crypto": "^1.0.1",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.4.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "resend": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

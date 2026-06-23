@@ -1,0 +1,51 @@
+name: 🏛️ Diário Estoico — Newsletter Diária
+
+on:
+  schedule:
+    # 11:00 UTC = 08:00 BRT (horário de Brasília)
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+    # Permite execução manual para testes
+
+env:
+  ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+  RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+  RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+  RECIPIENT_NAME: ${{ secrets.RECIPIENT_NAME }}
+  SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+  SENDER_NAME: "Diário Estoico"
+  TZ: America/Sao_Paulo
+  NODE_ENV: production
+
+jobs:
+  send-newsletter:
+    name: Gerar e Enviar Newsletter
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 📦 Instalar dependências
+        run: npm ci
+
+      - name: 🏗️ Build
+        run: npm run build
+
+      - name: 🏛️ Enviar Newsletter
+        run: npm start
+
+      - name: 📊 Log de conclusão
+        if: always()
+        run: |
+          echo "Pipeline executado em $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          echo "Status: ${{ job.status }}"

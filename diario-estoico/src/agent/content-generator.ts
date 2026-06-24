@@ -39,7 +39,10 @@ export interface GenerationResult {
   domain: string;
   externalEvent: string | null;
   validation: ValidationResult;
+  attempts: number;
 }
+
+const MAX_GENERATION_ATTEMPTS = 3;
 
 /**
  * Pipeline completo de geração de conteúdo:
@@ -77,11 +80,10 @@ export async function generateDailyContent(): Promise<GenerationResult> {
   console.log(`   Tema: ${teaching.theme}`);
   console.log(`   Domínio: ${domain}`);
 
-  // 3. Gerar conteúdo via Claude
-  console.log("\n🤖 Gerando conteúdo via Claude API...");
+  // 3. Gerar conteúdo via Claude (com correção automática em caso de alucinação)
   const editionNumber = await getNextEditionNumber();
 
-  const prompt = buildNewsletterPrompt({
+  const basePrompt = buildNewsletterPrompt({
     teaching,
     domain,
     dayContext,
@@ -92,45 +94,63 @@ export async function generateDailyContent(): Promise<GenerationResult> {
 
   const anthropic = new Anthropic({ apiKey: config.anthropic.apiKey });
 
-  const response = await anthropic.messages.create({
-    model: config.anthropic.model,
-    max_tokens: 2000,
-    temperature: 0.7,
-    messages: [{ role: "user", content: prompt }],
-  });
-
-  const textBlock = response.content.find((b) => b.type === "text");
-  if (!textBlock || textBlock.type !== "text") {
-    throw new Error("Claude não retornou conteúdo de texto");
-  }
-
-  // Parse do JSON (com limpeza de possíveis backticks)
-  const cleanJson = textBlock.text
-    .replace(/```json\n?/g, "")
-    .replace(/```\n?/g, "")
-    .trim();
-
   let content: NewsletterContent;
-  try {
-    content = JSON.parse(cleanJson);
-  } catch {
-    throw new Error(`Erro ao parsear JSON do Claude:\n${cleanJson.slice(0, 500)}`);
-  }
+  let validation: ValidationResult;
+  let attempt = 0;
+  let correctionNotice = "";
 
-  console.log(`   ✓ Conteúdo gerado: "${content.subjectLine}"`);
+  do {
+    attempt++;
+    console.log(
+      `\n🤖 Gerando conteúdo via Claude API... (tentativa ${attempt}/${MAX_GENERATION_ATTEMPTS})`
+    );
 
-  // 4. Validação (double-check)
-  console.log("\n🔍 Validando conteúdo...");
-  const validation = await validateContent(content, teaching);
-  console.log(`   Citação correta: ${validation.quoteMatch ? "✓" : "✗"}`);
-  console.log(`   Referência correta: ${validation.sourceMatch ? "✓" : "✗"}`);
-  console.log(`   Sem alucinação: ${validation.noHallucination ? "✓" : "⚠️"}`);
+    const response = await anthropic.messages.create({
+      model: config.anthropic.model,
+      max_tokens: 2000,
+      temperature: 0.7,
+      messages: [{ role: "user", content: basePrompt + correctionNotice }],
+    });
 
-  // Se citação foi alterada, forçar a original
-  if (!validation.quoteMatch) {
-    console.log("   ⚠️  Corrigindo citação para a original...");
+    const textBlock = response.content.find((b) => b.type === "text");
+    if (!textBlock || textBlock.type !== "text") {
+      throw new Error("Claude não retornou conteúdo de texto");
+    }
+
+    // Parse do JSON (com limpeza de possíveis backticks)
+    const cleanJson = textBlock.text
+      .replace(/```json\n?/g, "")
+      .replace(/```\n?/g, "")
+      .trim();
+
+    try {
+      content = JSON.parse(cleanJson);
+    } catch {
+      throw new Error(`Erro ao parsear JSON do Claude:\n${cleanJson.slice(0, 500)}`);
+    }
+
+    console.log(`   ✓ Conteúdo gerado: "${content.subjectLine}"`);
+
+    // Citação e referência bibliográfica são sempre forçadas para os valores
+    // reais da base (fonte da verdade), eliminando esse vetor de alucinação
+    // antes mesmo de validar.
     content.quote.text = teaching.originalText;
-  }
+    content.quote.source = `${teaching.philosopher}, ${teaching.work}, ${teaching.bookChapter}`;
+
+    // 4. Validação (double-check anti-alucinação)
+    console.log("🔍 Validando conteúdo...");
+    validation = await validateContent(content, teaching);
+    console.log(`   Citação correta: ${validation.quoteMatch ? "✓" : "✗"}`);
+    console.log(`   Referência correta: ${validation.sourceMatch ? "✓" : "✗"}`);
+    console.log(`   Sem alucinação: ${validation.noHallucination ? "✓" : "⚠️"}`);
+
+    if (!validation.noHallucination && attempt < MAX_GENERATION_ATTEMPTS) {
+      console.log("   ⚠️  Revisor encontrou problema factual. Regenerando conteúdo...");
+      correctionNotice = `\n\nATENÇÃO: numa tentativa anterior, o revisor identificou este problema factual: "${validation.warnings.join(
+        " "
+      )}". Gere uma nova versão que corrija esse problema, mantendo fidelidade estrita aos fatos sobre ${teaching.philosopher} e ${teaching.work}.`;
+    }
+  } while (!validation.noHallucination && attempt < MAX_GENERATION_ATTEMPTS);
 
   const externalEvent =
     dayContext.calendarEvents.length > 0
@@ -147,5 +167,6 @@ export async function generateDailyContent(): Promise<GenerationResult> {
     domain,
     externalEvent,
     validation,
+    attempts: attempt,
   };
 }

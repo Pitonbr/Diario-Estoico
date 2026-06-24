@@ -66,13 +66,14 @@ export async function getRecentDomains(limit = 3): Promise<string[]> {
   return data ? data.map((row) => row.practical_domain) : [];
 }
 
-// ─── Verificar se já enviou hoje ───
+// ─── Verificar se já enviou hoje (apenas envios bem-sucedidos bloqueiam reenvio) ───
 export async function hasAlreadySentToday(date: string): Promise<boolean> {
   const db = getSupabase();
   const { data } = await db
     .from("sent_newsletters")
     .select("id")
     .eq("send_date", date)
+    .eq("delivery_status", "sent")
     .limit(1);
 
   return data !== null && data.length > 0;
@@ -91,10 +92,12 @@ export async function isContentDuplicate(content: string): Promise<boolean> {
   return data !== null && data.length > 0;
 }
 
-// ─── Registrar newsletter enviada ───
+// ─── Registrar newsletter enviada (upsert por data: permite reexecução no mesmo dia após falha/bloqueio de validação) ───
 export async function recordSentNewsletter(newsletter: SentNewsletter): Promise<void> {
   const db = getSupabase();
-  const { error } = await db.from("sent_newsletters").insert(newsletter);
+  const { error } = await db
+    .from("sent_newsletters")
+    .upsert(newsletter, { onConflict: "send_date" });
 
   if (error) {
     throw new Error(`Erro ao registrar newsletter: ${error.message}`);

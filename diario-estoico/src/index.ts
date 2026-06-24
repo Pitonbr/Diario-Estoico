@@ -45,6 +45,35 @@ async function main() {
       validation.warnings.forEach((w) => console.log(`   - ${w}`));
     }
 
+    // ── Guard: só envia se passou pela validação anti-alucinação ──
+    if (!validation.noHallucination) {
+      console.error(
+        `\n✗ Conteúdo não passou na validação anti-alucinação após ${result.attempts} tentativa(s). Email NÃO enviado.`
+      );
+
+      const editionNumber = await getNextEditionNumber();
+      await recordSentNewsletter({
+        edition_number: editionNumber,
+        send_date: today,
+        teaching_key: teachingKey,
+        philosopher,
+        source_work: sourceWork,
+        topic_tags: [],
+        practical_domain: domain,
+        external_event: externalEvent,
+        content_hash: generateContentHash(JSON.stringify(content)),
+        subject_line: content.subjectLine,
+        full_content: {
+          ...(content as unknown as Record<string, unknown>),
+          validationWarnings: validation.warnings,
+        },
+        recipient_email: config.email.recipientEmail,
+        delivery_status: "failed",
+      });
+
+      process.exit(1);
+    }
+
     // ── 2. Enviar email ──
     console.log("\n📧 Enviando email...");
     const sendResult = await sendNewsletter(content, content.subjectLine);

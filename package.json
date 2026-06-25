@@ -17,7 +17,7 @@
   "author": "Pitonbr",
   "license": "MIT",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0",
+    "@anthropic-ai/sdk": "^0.106.0",
     "@react-email/components": "^0.0.31",
     "@react-email/render": "^1.0.4",
     "@supabase/supabase-js": "^2.49.1",

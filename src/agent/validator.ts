@@ -71,8 +71,11 @@ TEXTO PARA REVISÃO:
 
 Referência declarada: ${teaching.philosopher}, ${teaching.work}, ${teaching.bookChapter}
 
-Se NÃO encontrar problemas factuais graves, responda apenas: OK
-Se encontrar problemas, liste-os brevemente (máx 2 frases cada).`,
+Responda SEMPRE no formato exato abaixo (a primeira linha é obrigatória e deve conter apenas uma das duas palavras):
+STATUS: OK
+ou
+STATUS: PROBLEMA
+DETALHES: <explicação breve, máx 2 frases por problema>`,
         },
       ],
     });
@@ -80,7 +83,8 @@ Se encontrar problemas, liste-os brevemente (máx 2 frases cada).`,
     const reviewText = reviewResponse.content.find((b) => b.type === "text");
     if (reviewText && reviewText.type === "text") {
       const reviewContent = reviewText.text.trim();
-      if (reviewContent !== "OK") {
+      const statusLine = reviewContent.split("\n")[0].toUpperCase();
+      if (!statusLine.includes("STATUS: OK") && !statusLine.endsWith("OK")) {
         noHallucination = false;
         warnings.push(`Revisor detectou possível problema: ${reviewContent}`);
       }

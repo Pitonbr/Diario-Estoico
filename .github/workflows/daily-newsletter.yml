@@ -17,7 +17,6 @@ env:
   SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
   SENDER_NAME: "Diário Estoico"
   TZ: America/Sao_Paulo
-  NODE_ENV: production
 
 jobs:
   send-newsletter:
@@ -43,6 +42,8 @@ jobs:
 
       - name: 🏛️ Enviar Newsletter
         run: npm start
+        env:
+          NODE_ENV: production
 
       - name: 📊 Log de conclusão
         if: always()

@@ -66,6 +66,48 @@ export async function getRecentDomains(limit = 3): Promise<string[]> {
   return data ? data.map((row) => row.practical_domain) : [];
 }
 
+// ─── Buscar inscritos ativos (email ou whatsapp) ───
+export interface Subscriber {
+  channel: "email" | "whatsapp";
+  email: string | null;
+  phone: string | null;
+  name: string | null;
+}
+
+export async function getActiveSubscribers(): Promise<Subscriber[]> {
+  const db = getSupabase();
+  const { data } = await db
+    .from("subscribers")
+    .select("channel, email, phone, name")
+    .eq("active", true);
+
+  return data ?? [];
+}
+
+// ─── Cadastrar novo inscrito (email ou whatsapp) ───
+export async function addSubscriber(input: {
+  channel: "email" | "whatsapp";
+  email?: string;
+  phone?: string;
+  name?: string;
+}): Promise<void> {
+  const db = getSupabase();
+  const { error } = await db.from("subscribers").upsert(
+    {
+      channel: input.channel,
+      email: input.email ?? null,
+      phone: input.phone ?? null,
+      name: input.name ?? null,
+      active: true,
+    },
+    { onConflict: input.channel === "email" ? "email" : "phone" }
+  );
+
+  if (error) {
+    throw new Error(`Erro ao cadastrar inscrito: ${error.message}`);
+  }
+}
+
 // ─── Verificar se já enviou hoje (apenas envios bem-sucedidos bloqueiam reenvio) ───
 export async function hasAlreadySentToday(date: string): Promise<boolean> {
   const db = getSupabase();

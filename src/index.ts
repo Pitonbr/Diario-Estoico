@@ -4,7 +4,8 @@ import timezone from "dayjs/plugin/timezone";
 
 import { config } from "./config/env";
 import { generateDailyContent } from "./agent/content-generator";
-import { sendNewsletter } from "./email/sender";
+import { sendToList } from "./email/sender";
+import { sendWhatsAppToList, formatWhatsAppMessage } from "./channels/whatsapp";
 import {
   hasAlreadySentToday,
   recordSentNewsletter,
@@ -12,6 +13,7 @@ import {
   markTeachingUsed,
   generateContentHash,
   getNextEditionNumber,
+  getActiveSubscribers,
 } from "./database/queries";
 
 dayjs.extend(utc);
@@ -24,7 +26,6 @@ async function main() {
   console.log("═══════════════════════════════════════════");
   console.log("  🏛️  DIÁRIO ESTOICO — Pipeline Diário");
   console.log(`  📅  ${today}`);
-  console.log(`  📧  Destino: ${config.email.recipientEmail}`);
   console.log("═══════════════════════════════════════════\n");
 
   // ── Guard: já enviou hoje? ──
@@ -74,35 +75,61 @@ async function main() {
       process.exit(1);
     }
 
-    // ── 2. Enviar email ──
-    console.log("\n📧 Enviando email...");
-    const sendResult = await sendNewsletter(content, content.subjectLine);
+    // ── 2. Enviar para todos os inscritos ativos, por canal ──
+    const subscribers = await getActiveSubscribers();
+    const emailSubs = subscribers.filter((s) => s.channel === "email" && s.email);
+    const whatsappSubs = subscribers.filter((s) => s.channel === "whatsapp" && s.phone);
 
-    if (!sendResult.success) {
-      console.error(`\n✗ Falha no envio: ${sendResult.error}`);
+    const recipients =
+      emailSubs.length > 0
+        ? emailSubs
+        : [{ channel: "email" as const, email: config.email.recipientEmail, phone: null, name: config.email.recipientName }];
 
-      // Registra tentativa com status failed
-      const editionNumber = await getNextEditionNumber();
-      await recordSentNewsletter({
-        edition_number: editionNumber,
-        send_date: today,
-        teaching_key: teachingKey,
-        philosopher,
-        source_work: sourceWork,
-        topic_tags: [],
-        practical_domain: domain,
-        external_event: externalEvent,
-        content_hash: generateContentHash(JSON.stringify(content)),
-        subject_line: content.subjectLine,
-        full_content: content as unknown as Record<string, unknown>,
-        recipient_email: config.email.recipientEmail,
-        delivery_status: "failed",
+    const succeeded: string[] = [];
+    const failed: string[] = [];
+    let firstResendId: string | undefined;
+
+    console.log(`\n📧 Enviando email para ${recipients.length} inscrito(s)...`);
+    const sendResults = await sendToList(
+      content,
+      content.subjectLine,
+      recipients.map((r) => r.email as string)
+    );
+
+    sendResults.forEach((result, i) => {
+      const email = recipients[i].email as string;
+      if (result.success) {
+        succeeded.push(email);
+        firstResendId = firstResendId ?? result.resendId;
+        console.log(`   ✓ ${email} — Resend ID: ${result.resendId}`);
+      } else {
+        failed.push(email);
+        console.error(`   ✗ ${email} — falha: ${result.error}`);
+      }
+    });
+
+    if (whatsappSubs.length > 0) {
+      console.log(`\n💬 Enviando WhatsApp para ${whatsappSubs.length} inscrito(s)...`);
+      const whatsappText = formatWhatsAppMessage(content);
+      const whatsappResults = await sendWhatsAppToList(
+        whatsappSubs.map((s) => s.phone as string),
+        whatsappText
+      );
+
+      whatsappResults.forEach((result, i) => {
+        const phone = whatsappSubs[i].phone as string;
+        if (result.success) {
+          succeeded.push(phone);
+          console.log(`   ✓ ${phone} — Message ID: ${result.messageId}`);
+        } else {
+          failed.push(phone);
+          console.error(`   ✗ ${phone} — falha: ${result.error}`);
+        }
       });
-
-      process.exit(1);
     }
 
-    console.log(`   ✓ Email enviado! Resend ID: ${sendResult.resendId}`);
+    const deliveryStatus =
+      succeeded.length === 0 ? "failed" : failed.length > 0 ? "partial" : "sent";
 
     // ── 3. Registrar no banco ──
     console.log("\n💾 Registrando no banco de dados...");
@@ -120,10 +147,15 @@ async function main() {
       content_hash: generateContentHash(JSON.stringify(content)),
       subject_line: content.subjectLine,
       full_content: content as unknown as Record<string, unknown>,
-      recipient_email: config.email.recipientEmail,
-      delivery_status: "sent",
-      resend_id: sendResult.resendId,
+      recipient_email: succeeded.join(", ") || failed.join(", "),
+      delivery_status: deliveryStatus,
+      resend_id: firstResendId,
     });
+
+    if (succeeded.length === 0) {
+      console.error("\n✗ Nenhum envio teve sucesso.");
+      process.exit(1);
+    }
 
     await markTeachingUsed(teachingKey);
 

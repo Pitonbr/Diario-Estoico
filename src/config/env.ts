@@ -25,6 +25,10 @@ export const config = {
     senderEmail: process.env.SENDER_EMAIL || "onboarding@resend.dev",
     senderName: process.env.SENDER_NAME || "Diário Estoico",
   },
+  whatsapp: {
+    accessToken: process.env.WHATSAPP_ACCESS_TOKEN || "",
+    phoneNumberId: process.env.WHATSAPP_PHONE_NUMBER_ID || "",
+  },
   timezone: process.env.TZ || "America/Sao_Paulo",
   nodeEnv: process.env.NODE_ENV || "development",
 };

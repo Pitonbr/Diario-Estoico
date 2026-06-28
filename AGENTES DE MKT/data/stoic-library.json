@@ -1,0 +1,792 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "totalTeachings": 120,
+    "sources": [
+      "Marco Aurélio — Meditações",
+      "Sêneca — Cartas a Lucílio",
+      "Sêneca — Sobre a Brevidade da Vida",
+      "Sêneca — Sobre a Raiva",
+      "Sêneca — Sobre a Tranquilidade da Alma",
+      "Epicteto — Enchiridion (Manual)",
+      "Epicteto — Discursos",
+      "Ryan Holiday — The Daily Stoic",
+      "Donald Robertson — How to Think Like a Roman Emperor",
+      "William B. Irvine — A Guide to the Good Life",
+      "Pierre Hadot — Exercícios Espirituais e Filosofia Antiga",
+      "Massimo Pigliucci — How to Be a Stoic"
+    ]
+  },
+  "teachings": [
+    {
+      "id": "ma-med-01",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro II, §1",
+      "theme": "preparação matinal",
+      "originalText": "Ao amanhecer, diga a si mesmo: hoje vou encontrar pessoas intrusivas, ingratas, arrogantes, desonestas, invejosas e insociáveis. Tudo isso lhes acontece por ignorância do que é bom e do que é mau.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["manhã", "preparação", "pessoas", "paciência"]
+    },
+    {
+      "id": "ma-med-02",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro II, §4",
+      "theme": "impermanência",
+      "originalText": "Lembre-se de quanto tempo você tem adiado essas coisas e quantas vezes os deuses lhe deram períodos de graça sem que você os aproveitasse. Já é hora de perceber de que universo você faz parte.",
+      "practicalDomains": ["pessoal", "financeiro"],
+      "tags": ["tempo", "urgência", "propósito", "procrastinação"]
+    },
+    {
+      "id": "ma-med-03",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro III, §10",
+      "theme": "desapego ao status",
+      "originalText": "Descarte suas vãs esperanças e venha em auxílio de si mesmo, se é que se importa consigo, enquanto ainda pode.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["ação", "autossuficiência", "coragem"]
+    },
+    {
+      "id": "ma-med-04",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro IV, §3",
+      "theme": "retiro interior",
+      "originalText": "Os homens buscam retiros no campo, na praia e nas montanhas. Mas está ao seu alcance, a qualquer hora, retirar-se para dentro de si mesmo.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["paz interior", "meditação", "foco", "calma"]
+    },
+    {
+      "id": "ma-med-05",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro IV, §7",
+      "theme": "controle dos julgamentos",
+      "originalText": "Elimine o julgamento e o sentimento de 'estou sendo prejudicado' desaparece. Elimine o sentimento de prejuízo e o próprio prejuízo desaparece.",
+      "practicalDomains": ["pessoal", "financeiro"],
+      "tags": ["julgamento", "percepção", "resiliência"]
+    },
+    {
+      "id": "ma-med-06",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro V, §1",
+      "theme": "disciplina matinal",
+      "originalText": "De manhã, quando relutares em levantar, diz a ti mesmo: devo ir trabalhar como ser humano. Por que reclamar se vou fazer aquilo para o qual nasci e fui trazido ao mundo?",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["manhã", "trabalho", "propósito", "disciplina"]
+    },
+    {
+      "id": "ma-med-07",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro V, §16",
+      "theme": "qualidade dos pensamentos",
+      "originalText": "A qualidade dos seus pensamentos determina a qualidade da sua vida, pois a alma é tingida pela cor dos seus pensamentos.",
+      "practicalDomains": ["pessoal", "mentoria"],
+      "tags": ["pensamento", "mindset", "qualidade de vida"]
+    },
+    {
+      "id": "ma-med-08",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro VI, §6",
+      "theme": "melhor vingança",
+      "originalText": "A melhor vingança é não ser como o seu inimigo.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["caráter", "integridade", "rivalidade"]
+    },
+    {
+      "id": "ma-med-09",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro VI, §15",
+      "theme": "obstáculo como caminho",
+      "originalText": "O que se coloca no caminho torna-se o caminho.",
+      "practicalDomains": ["empreendedor", "financeiro"],
+      "tags": ["obstáculo", "oportunidade", "resiliência", "adversidade"]
+    },
+    {
+      "id": "ma-med-10",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro VII, §8",
+      "theme": "vista do alto",
+      "originalText": "Contempla a vastidão do tempo e do espaço e pensa no quão breve e insignificante é a porção que te cabe de cada um.",
+      "practicalDomains": ["pessoal"],
+      "tags": ["perspectiva", "humildade", "cosmos", "proporção"]
+    },
+    {
+      "id": "ma-med-11",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro VII, §59",
+      "theme": "cavar fundo",
+      "originalText": "Cave dentro de si. Dentro de você há uma fonte de bem que jamais cessará de jorrar, se você não parar de escavar.",
+      "practicalDomains": ["pessoal", "mentoria"],
+      "tags": ["autoconhecimento", "potencial", "força interior"]
+    },
+    {
+      "id": "ma-med-12",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro VIII, §47",
+      "theme": "preocupação desnecessária",
+      "originalText": "Se você está angustiado por algo externo, a dor não se deve à coisa em si, mas à sua estimativa sobre ela; e isso você tem o poder de revogar a qualquer momento.",
+      "practicalDomains": ["pessoal", "financeiro"],
+      "tags": ["ansiedade", "controle", "julgamento", "poder interior"]
+    },
+    {
+      "id": "ma-med-13",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro IX, §29",
+      "theme": "foco no presente",
+      "originalText": "Não perca o que resta da sua vida em especulações sobre os outros, a menos que isso se relacione com algum bem comum.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["foco", "presente", "fofoca", "produtividade"]
+    },
+    {
+      "id": "ma-med-14",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro X, §16",
+      "theme": "aceitar a mudança",
+      "originalText": "O universo é transformação; a vida é opinião.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["mudança", "adaptação", "impermanência"]
+    },
+    {
+      "id": "ma-med-15",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro XII, §26",
+      "theme": "memento mori",
+      "originalText": "Pense em quantos médicos morreram, depois de franzir tanto a testa sobre seus pacientes; quantos astrólogos, depois de prever com ares de importância a morte dos outros.",
+      "practicalDomains": ["pessoal"],
+      "tags": ["morte", "humildade", "perspectiva", "memento mori"]
+    },
+    {
+      "id": "sen-cart-01",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 1",
+      "theme": "valor do tempo",
+      "originalText": "Não é que tenhamos pouco tempo, mas que desperdiçamos muito. A vida é longa o suficiente se for bem empregada.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["tempo", "produtividade", "prioridade", "vida"]
+    },
+    {
+      "id": "sen-cart-02",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 2",
+      "theme": "constância no aprendizado",
+      "originalText": "Esteja em toda parte e não estarás em parte alguma. Quem passa a vida viajando acaba tendo muitos conhecidos e nenhum amigo.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["foco", "profundidade", "dispersão", "constância"]
+    },
+    {
+      "id": "sen-cart-03",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 7",
+      "theme": "influência do grupo",
+      "originalText": "Conviver com a multidão é nocivo: não há quem não nos recomende algum vício, ou no-lo imprima, ou nos contamine sem que o percebamos.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["influência", "grupo", "hábitos", "ambiente"]
+    },
+    {
+      "id": "sen-cart-04",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 9",
+      "theme": "autossuficiência e amizade",
+      "originalText": "O sábio é autossuficiente. Isso não quer dizer que ele queira viver sem amigos, mas que ele pode viver sem eles. Quando perde um amigo, suporta isso com equanimidade.",
+      "practicalDomains": ["pessoal"],
+      "tags": ["amizade", "independência", "autossuficiência", "perda"]
+    },
+    {
+      "id": "sen-cart-05",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 13",
+      "theme": "ansiedade antecipada",
+      "originalText": "Sofremos mais frequentemente na imaginação do que na realidade. Há mais coisas que nos assustam do que coisas que nos esmagam.",
+      "practicalDomains": ["pessoal", "financeiro", "empreendedor"],
+      "tags": ["ansiedade", "medo", "imaginação", "realidade"]
+    },
+    {
+      "id": "sen-cart-06",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 16",
+      "theme": "filosofia como medicina",
+      "originalText": "A filosofia não é um truque para agradar o público. Não é feita para exibição. É uma questão de ação, não de palavras.",
+      "practicalDomains": ["pessoal", "mentoria"],
+      "tags": ["ação", "prática", "filosofia", "autenticidade"]
+    },
+    {
+      "id": "sen-cart-07",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 18",
+      "theme": "desconforto voluntário",
+      "originalText": "Reserve alguns dias para se contentar com a comida mais escassa e barata, com roupas ásperas, e pergunte a si mesmo: era isso o que eu temia?",
+      "practicalDomains": ["pessoal", "financeiro"],
+      "tags": ["desconforto", "resiliência", "simplicidade", "medo"]
+    },
+    {
+      "id": "sen-cart-08",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 24",
+      "theme": "premeditatio malorum",
+      "originalText": "Antecipe mentalmente tudo o que pode acontecer de mau. Se quiser livrar-se de toda preocupação, imagine que aquilo que teme vai certamente acontecer.",
+      "practicalDomains": ["pessoal", "empreendedor", "financeiro"],
+      "tags": ["premeditação", "preparação", "medo", "resiliência"]
+    },
+    {
+      "id": "sen-cart-09",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 28",
+      "theme": "fugir de si mesmo",
+      "originalText": "Por que se admira de que suas viagens não lhe tragam proveito? Você carrega a si mesmo por toda parte. A mesma coisa que o expulsou de casa o persegue agora.",
+      "practicalDomains": ["pessoal"],
+      "tags": ["fuga", "autoconhecimento", "viagem", "mudança"]
+    },
+    {
+      "id": "sen-cart-10",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 33",
+      "theme": "pensar por si mesmo",
+      "originalText": "Não fique dependente de livros e citações de outros. Produza algo de sua própria lavra. Os que nunca fazem nada além de seguir outros nunca encontrarão nada, aliás, nunca procurarão.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["autonomia", "criatividade", "originalidade", "pensamento"]
+    },
+    {
+      "id": "sen-cart-11",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 47",
+      "theme": "tratar bem os subordinados",
+      "originalText": "Trata com humanidade o teu escravo. Admite-o à tua conversa, aos teus conselhos, à tua mesa. Vive com o teu inferior como gostarias que o teu superior vivesse contigo.",
+      "practicalDomains": ["empreendedor", "mentoria"],
+      "tags": ["liderança", "respeito", "equipe", "humanidade"]
+    },
+    {
+      "id": "sen-cart-12",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 49",
+      "theme": "rapidez do tempo",
+      "originalText": "A maior parte da vida passa enquanto fazemos mal, boa parte enquanto não fazemos nada, e toda ela enquanto fazemos outra coisa que não o que deveríamos.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["tempo", "foco", "prioridade", "procrastinação"]
+    },
+    {
+      "id": "sen-cart-13",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 71",
+      "theme": "definição de bem",
+      "originalText": "O que é o bem? O conhecimento das coisas. O que é o mal? A ignorância das coisas.",
+      "practicalDomains": ["pessoal", "mentoria"],
+      "tags": ["bem", "mal", "conhecimento", "ignorância"]
+    },
+    {
+      "id": "sen-cart-14",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 76",
+      "theme": "razão como virtude suprema",
+      "originalText": "O que é próprio do homem? A razão. Quando ela é correta e plena, completa a felicidade humana. Logo, se cada coisa é digna de louvor e atinge o ápice de sua natureza quando realiza o fim para o qual nasceu, e o fim do homem é a razão, então a virtude do homem é a razão perfeita.",
+      "practicalDomains": ["pessoal", "mentoria"],
+      "tags": ["razão", "virtude", "natureza humana", "propósito"]
+    },
+    {
+      "id": "sen-cart-15",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 78",
+      "theme": "superar a doença",
+      "originalText": "A doença é um impedimento para o corpo, mas não para a vontade, a menos que ela mesma consinta. A lentidão é um impedimento para as pernas, mas não para a vontade.",
+      "practicalDomains": ["pessoal"],
+      "tags": ["doença", "vontade", "resiliência", "corpo"]
+    },
+    {
+      "id": "sen-brev-01",
+      "philosopher": "Sêneca",
+      "work": "Sobre a Brevidade da Vida",
+      "bookChapter": "Capítulo 1",
+      "theme": "brevidade da vida",
+      "originalText": "Não recebemos uma vida curta; nós a fazemos curta. Não somos mal providos; somos esbanjadores dela.",
+      "practicalDomains": ["pessoal", "financeiro"],
+      "tags": ["tempo", "vida", "desperdício", "consciência"]
+    },
+    {
+      "id": "sen-brev-02",
+      "philosopher": "Sêneca",
+      "work": "Sobre a Brevidade da Vida",
+      "bookChapter": "Capítulo 3",
+      "theme": "ocupação vazia",
+      "originalText": "Não é o homem ocupado que é admirável. É o homem que tem tempo de sobra, porque sabe o que realmente importa.",
+      "practicalDomains": ["empreendedor", "pessoal"],
+      "tags": ["ocupação", "prioridade", "essencialismo", "foco"]
+    },
+    {
+      "id": "sen-ira-01",
+      "philosopher": "Sêneca",
+      "work": "Sobre a Raiva",
+      "bookChapter": "Livro I, §1",
+      "theme": "controlar a raiva",
+      "originalText": "A raiva é a mais destrutiva de todas as paixões. Outras têm algum elemento de calma, mas a raiva é puro tumulto e fúria.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["raiva", "emoção", "controle", "destruição"]
+    },
+    {
+      "id": "sen-ira-02",
+      "philosopher": "Sêneca",
+      "work": "Sobre a Raiva",
+      "bookChapter": "Livro III, §36",
+      "theme": "revisão noturna",
+      "originalText": "Que hábito mais belo que este de examinar o dia inteiro? Que sono se segue a essa autoinspeção, quão tranquilo, profundo e livre é o sono quando a alma foi louvada ou advertida.",
+      "practicalDomains": ["pessoal", "mentoria"],
+      "tags": ["revisão", "noite", "hábito", "autoexame"]
+    },
+    {
+      "id": "sen-tranq-01",
+      "philosopher": "Sêneca",
+      "work": "Sobre a Tranquilidade da Alma",
+      "bookChapter": "Capítulo 11",
+      "theme": "preparar-se para o azar",
+      "originalText": "O que pode acontecer a qualquer um pode acontecer a cada um de nós. Se alguém permite que isso penetre em seu íntimo e contempla os males alheios como se pudessem abrir caminho até ele, estará preparado muito antes de ser atingido.",
+      "practicalDomains": ["financeiro", "empreendedor"],
+      "tags": ["preparação", "risco", "prevenção", "resiliência"]
+    },
+    {
+      "id": "epi-ench-01",
+      "philosopher": "Epicteto",
+      "work": "Enchiridion (Manual)",
+      "bookChapter": "Capítulo 1",
+      "theme": "dicotomia do controle",
+      "originalText": "De todas as coisas existentes, algumas estão em nosso poder e outras não. Em nosso poder estão opinião, movimento, desejo, aversão — em resumo, tudo o que é ação nossa. Fora do nosso poder estão o corpo, a propriedade, a reputação, o cargo.",
+      "practicalDomains": ["pessoal", "financeiro", "empreendedor"],
+      "tags": ["controle", "poder", "liberdade", "fundamento"]
+    },
+    {
+      "id": "epi-ench-02",
+      "philosopher": "Epicteto",
+      "work": "Enchiridion (Manual)",
+      "bookChapter": "Capítulo 5",
+      "theme": "origem da perturbação",
+      "originalText": "Não são os fatos que perturbam os homens, mas os julgamentos que os homens fazem sobre os fatos.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["julgamento", "percepção", "emoção", "interpretação"]
+    },
+    {
+      "id": "epi-ench-03",
+      "philosopher": "Epicteto",
+      "work": "Enchiridion (Manual)",
+      "bookChapter": "Capítulo 8",
+      "theme": "desejar o que acontece",
+      "originalText": "Não procure fazer com que os eventos aconteçam como você deseja. Deseje que eles aconteçam como acontecem e tudo correrá bem para você.",
+      "practicalDomains": ["pessoal"],
+      "tags": ["aceitação", "desejo", "realidade", "serenidade"]
+    },
+    {
+      "id": "epi-ench-04",
+      "philosopher": "Epicteto",
+      "work": "Enchiridion (Manual)",
+      "bookChapter": "Capítulo 11",
+      "theme": "perda e devolução",
+      "originalText": "Nunca diga de nada 'eu perdi', mas sim 'eu devolvi'. Seu filho morreu? Foi devolvido. Sua esposa morreu? Foi devolvida. Sua propriedade foi tomada? Também foi devolvida.",
+      "practicalDomains": ["pessoal", "financeiro"],
+      "tags": ["perda", "desapego", "perspectiva", "gratidão"]
+    },
+    {
+      "id": "epi-ench-05",
+      "philosopher": "Epicteto",
+      "work": "Enchiridion (Manual)",
+      "bookChapter": "Capítulo 15",
+      "theme": "moderação no banquete",
+      "originalText": "Lembre-se de que você é ator numa peça determinada pelo autor. Se o papel for curto, é curto; se longo, é longo. Se ele quer que você faça um mendigo, faça bem. O mesmo para um aleijado, um governante ou um cidadão comum.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["papel", "aceitação", "excelência", "destino"]
+    },
+    {
+      "id": "epi-ench-06",
+      "philosopher": "Epicteto",
+      "work": "Enchiridion (Manual)",
+      "bookChapter": "Capítulo 20",
+      "theme": "ofensa é escolha",
+      "originalText": "Lembre-se de que não é quem o insulta ou bate em você que o ofende, mas seu julgamento de que essas pessoas o estão ofendendo.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["ofensa", "julgamento", "escolha", "reação"]
+    },
+    {
+      "id": "epi-ench-07",
+      "philosopher": "Epicteto",
+      "work": "Enchiridion (Manual)",
+      "bookChapter": "Capítulo 33",
+      "theme": "falar menos",
+      "originalText": "Seja silencioso na maior parte do tempo, ou fale apenas o necessário e com poucas palavras. Raramente, e quando a ocasião exigir, fale, mas não sobre assuntos banais.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["silêncio", "comunicação", "essencialismo", "palavras"]
+    },
+    {
+      "id": "epi-ench-08",
+      "philosopher": "Epicteto",
+      "work": "Enchiridion (Manual)",
+      "bookChapter": "Capítulo 46",
+      "theme": "ser filósofo sem dizer",
+      "originalText": "Nunca se declare filósofo, nem fale muito entre os leigos sobre princípios filosóficos, mas aja de acordo com eles. Num banquete, não diga como se deve comer, mas coma como se deve.",
+      "practicalDomains": ["pessoal", "mentoria"],
+      "tags": ["ação", "exemplo", "humildade", "prática"]
+    },
+    {
+      "id": "epi-disc-01",
+      "philosopher": "Epicteto",
+      "work": "Discursos",
+      "bookChapter": "Livro I, Cap. 1",
+      "theme": "liberdade verdadeira",
+      "originalText": "Nenhum homem é livre se não é senhor de si mesmo.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["liberdade", "autodomínio", "autonomia"]
+    },
+    {
+      "id": "epi-disc-02",
+      "philosopher": "Epicteto",
+      "work": "Discursos",
+      "bookChapter": "Livro I, Cap. 2",
+      "theme": "papéis sociais",
+      "originalText": "Reflita sobre os vários papéis que você desempenha. Você é filho, irmão, pai, cidadão. Cada um desses títulos lhe diz o dever adequado.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["papel", "dever", "responsabilidade", "identidade"]
+    },
+    {
+      "id": "epi-disc-03",
+      "philosopher": "Epicteto",
+      "work": "Discursos",
+      "bookChapter": "Livro I, Cap. 15",
+      "theme": "fazer com o que se tem",
+      "originalText": "Faz com o que tens. Quem dera que meu cavalo fosse mais rápido — mas ele não é. Quem dera que eu fosse mais alto — mas não sou. O que posso fazer é não reclamar do que não tenho.",
+      "practicalDomains": ["empreendedor", "financeiro"],
+      "tags": ["recursos", "pragmatismo", "aceitação", "ação"]
+    },
+    {
+      "id": "epi-disc-04",
+      "philosopher": "Epicteto",
+      "work": "Discursos",
+      "bookChapter": "Livro II, Cap. 5",
+      "theme": "testar convicções",
+      "originalText": "Se quiser melhorar, aceite parecer estúpido e simples com relação a coisas externas. Não deseje ser considerado conhecedor de nada.",
+      "practicalDomains": ["pessoal", "mentoria"],
+      "tags": ["humildade", "aprendizado", "ego", "crescimento"]
+    },
+    {
+      "id": "epi-disc-05",
+      "philosopher": "Epicteto",
+      "work": "Discursos",
+      "bookChapter": "Livro II, Cap. 18",
+      "theme": "examinar impressões",
+      "originalText": "Toda impressão que chega à mente deve ser examinada: 'Deixe-me testá-la, ver do que é feita.' Como um guarda noturno que diz: mostre-me sua identificação.",
+      "practicalDomains": ["pessoal", "financeiro"],
+      "tags": ["impressão", "exame", "razão", "discernimento"]
+    },
+    {
+      "id": "epi-disc-06",
+      "philosopher": "Epicteto",
+      "work": "Discursos",
+      "bookChapter": "Livro III, Cap. 3",
+      "theme": "material de treino",
+      "originalText": "As dificuldades são o que mostram o caráter dos homens. Quando uma dificuldade surgir, lembre-se de que Deus, como um treinador, colocou-o contra um adversário duro.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["dificuldade", "caráter", "treino", "adversidade"]
+    },
+    {
+      "id": "epi-disc-07",
+      "philosopher": "Epicteto",
+      "work": "Discursos",
+      "bookChapter": "Livro III, Cap. 10",
+      "theme": "cuidar do que é nosso",
+      "originalText": "Se cuidares do teu papel, nunca serás pobre. Se deixares de cuidar do teu papel para buscar o que pertence aos outros, saibas que perderás o que é teu.",
+      "practicalDomains": ["empreendedor", "financeiro"],
+      "tags": ["foco", "papel", "comparação", "perda"]
+    },
+    {
+      "id": "epi-disc-08",
+      "philosopher": "Epicteto",
+      "work": "Discursos",
+      "bookChapter": "Livro IV, Cap. 1",
+      "theme": "preço da liberdade",
+      "originalText": "A liberdade não se obtém pela satisfação dos desejos, mas pela eliminação do desejo.",
+      "practicalDomains": ["pessoal", "financeiro"],
+      "tags": ["liberdade", "desejo", "simplicidade", "contentamento"]
+    },
+    {
+      "id": "hol-ds-01",
+      "philosopher": "Ryan Holiday",
+      "work": "The Daily Stoic",
+      "bookChapter": "Introdução",
+      "theme": "três disciplinas",
+      "originalText": "A filosofia estoica organiza-se em três disciplinas: a disciplina da percepção (como vemos o mundo), a disciplina da ação (como agimos no mundo) e a disciplina da vontade (como aceitamos o que não podemos mudar).",
+      "practicalDomains": ["pessoal", "mentoria"],
+      "tags": ["disciplina", "percepção", "ação", "vontade", "estrutura"]
+    },
+    {
+      "id": "rob-emp-01",
+      "philosopher": "Donald Robertson",
+      "work": "How to Think Like a Roman Emperor",
+      "bookChapter": "Cap. 1",
+      "theme": "estoicismo e TCC",
+      "originalText": "A terapia cognitivo-comportamental moderna é, em muitos aspectos, uma redescoberta dos exercícios espirituais que os estoicos antigos praticavam há mais de dois milênios. Aaron Beck reconheceu explicitamente essa dívida.",
+      "practicalDomains": ["pessoal", "mentoria"],
+      "tags": ["TCC", "psicologia", "ciência", "terapia"]
+    },
+    {
+      "id": "irv-gbv-01",
+      "philosopher": "William B. Irvine",
+      "work": "A Guide to the Good Life",
+      "bookChapter": "Cap. 4",
+      "theme": "visualização negativa",
+      "originalText": "A técnica estoica mais valiosa para a vida cotidiana é a visualização negativa: contemplar regularmente a possibilidade de perder as coisas que valorizamos, não para se deprimir, mas para desfrutar mais plenamente do que temos agora.",
+      "practicalDomains": ["pessoal", "financeiro"],
+      "tags": ["visualização", "gratidão", "técnica", "cotidiano"]
+    },
+    {
+      "id": "had-ex-01",
+      "philosopher": "Pierre Hadot",
+      "work": "Exercícios Espirituais e Filosofia Antiga",
+      "bookChapter": "Cap. 2",
+      "theme": "filosofia como modo de vida",
+      "originalText": "A filosofia antiga não consistia em ensinar uma teoria abstrata, muito menos em fazer exegese de textos, mas em propor uma arte de viver, uma atitude concreta, um estilo de vida determinado que engaja toda a existência.",
+      "practicalDomains": ["pessoal", "mentoria"],
+      "tags": ["filosofia", "vida", "prática", "existência"]
+    },
+    {
+      "id": "pig-hbs-01",
+      "philosopher": "Massimo Pigliucci",
+      "work": "How to Be a Stoic",
+      "bookChapter": "Cap. 1",
+      "theme": "estoicismo moderno",
+      "originalText": "O estoicismo não é uma filosofia de resignação passiva. É uma filosofia de engajamento ativo com o mundo, guiada pela razão, pela virtude e pela aceitação do que não podemos controlar.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["moderno", "engajamento", "ação", "razão"]
+    },
+    {
+      "id": "ma-med-16",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro II, §14",
+      "theme": "viver cada dia",
+      "originalText": "Mesmo que fôsseis viver três mil anos, ou trinta mil, recordai que ninguém perde outra vida senão a que está vivendo, nem vive outra senão a que está perdendo.",
+      "practicalDomains": ["pessoal"],
+      "tags": ["presente", "vida", "momento", "consciência"]
+    },
+    {
+      "id": "ma-med-17",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro III, §4",
+      "theme": "não desperdiçar energia",
+      "originalText": "Não gaste mais tempo debatendo o que um bom homem deveria ser. Seja um.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["ação", "debate", "execução", "caráter"]
+    },
+    {
+      "id": "ma-med-18",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro IV, §17",
+      "theme": "não viver como imortal",
+      "originalText": "Não viva como se tivesse dez mil anos pela frente. A morte paira sobre você. Enquanto vive, enquanto pode, seja bom.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["urgência", "bondade", "morte", "ação"]
+    },
+    {
+      "id": "ma-med-19",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro V, §6",
+      "theme": "servir aos outros",
+      "originalText": "A melhor maneira de se vingar é não se tornar igual ao ofensor.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["vingança", "caráter", "superioridade moral"]
+    },
+    {
+      "id": "ma-med-20",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro VI, §44",
+      "theme": "cosmopolitismo",
+      "originalText": "Minha cidade e minha pátria, como Antonino, é Roma; como ser humano, é o mundo.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["cosmopolitismo", "cidadania", "mundo", "pertencimento"]
+    },
+    {
+      "id": "sen-cart-16",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 3",
+      "theme": "confiança verdadeira",
+      "originalText": "Pondera longamente se deves admitir alguém à tua amizade; mas, uma vez que o tenhas admitido, confia-te a ele de todo o coração.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["confiança", "amizade", "parceria", "decisão"]
+    },
+    {
+      "id": "sen-cart-17",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 40",
+      "theme": "falar devagar",
+      "originalText": "O discurso que visa à verdade deve ser simples e desadornado. Nada combina menos com um filósofo do que a afetação.",
+      "practicalDomains": ["empreendedor", "mentoria"],
+      "tags": ["comunicação", "simplicidade", "verdade", "retórica"]
+    },
+    {
+      "id": "sen-cart-18",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 50",
+      "theme": "reconhecer os próprios vícios",
+      "originalText": "Ninguém se cura enquanto não reconhece que está doente. Grande parte do progresso consiste em querer progredir.",
+      "practicalDomains": ["pessoal", "mentoria"],
+      "tags": ["autoconhecimento", "progresso", "honestidade", "mudança"]
+    },
+    {
+      "id": "sen-cart-19",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 53",
+      "theme": "agir imediatamente",
+      "originalText": "Enquanto se espera viver, a vida passa.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["ação", "urgência", "espera", "procrastinação"]
+    },
+    {
+      "id": "sen-cart-20",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 63",
+      "theme": "luto saudável",
+      "originalText": "Deixe que suas lágrimas fluam, mas que também cessem; deixe que gemidos brotem do fundo do peito, mas que também tenham fim.",
+      "practicalDomains": ["pessoal"],
+      "tags": ["luto", "emoção", "equilíbrio", "perda"]
+    },
+    {
+      "id": "sen-cart-21",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 88",
+      "theme": "educação liberal",
+      "originalText": "Só existe uma educação verdadeiramente liberal: aquela que torna o homem livre. E essa é a educação em virtude.",
+      "practicalDomains": ["mentoria", "pessoal"],
+      "tags": ["educação", "liberdade", "virtude", "formação"]
+    },
+    {
+      "id": "sen-cart-22",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 104",
+      "theme": "riqueza como ferramenta",
+      "originalText": "O filósofo não rejeita a riqueza: ele apenas não a teme quando ela vai embora. Não a guarda em sua alma, mas em sua casa.",
+      "practicalDomains": ["financeiro", "empreendedor"],
+      "tags": ["riqueza", "dinheiro", "desapego", "ferramenta"]
+    },
+    {
+      "id": "epi-ench-09",
+      "philosopher": "Epicteto",
+      "work": "Enchiridion (Manual)",
+      "bookChapter": "Capítulo 48",
+      "theme": "sinais de progresso",
+      "originalText": "A marca de um homem que progride é esta: ele não censura ninguém, não elogia ninguém, não culpa ninguém, não acusa ninguém. Não diz nada sobre si mesmo como se fosse alguém ou soubesse algo.",
+      "practicalDomains": ["pessoal", "mentoria"],
+      "tags": ["progresso", "humildade", "maturidade", "silêncio"]
+    },
+    {
+      "id": "epi-ench-10",
+      "philosopher": "Epicteto",
+      "work": "Enchiridion (Manual)",
+      "bookChapter": "Capítulo 51",
+      "theme": "adiar a filosofia",
+      "originalText": "Até quando você vai adiar o que exige de si mesmo o melhor? Você recebeu os princípios. Agora não é mais um garoto. Cada dia que passa sem prática é um dia perdido.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["ação", "adiamento", "prática", "urgência"]
+    },
+    {
+      "id": "ma-med-21",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro VIII, §15",
+      "theme": "lembrar o que se perde",
+      "originalText": "Tudo o que vemos é uma perspectiva, não a verdade.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["perspectiva", "verdade", "percepção", "relatividade"]
+    },
+    {
+      "id": "ma-med-22",
+      "philosopher": "Marco Aurélio",
+      "work": "Meditações",
+      "bookChapter": "Livro XI, §18",
+      "theme": "lidar com pessoas difíceis",
+      "originalText": "Quando alguém o tratar mal ou falar mal de você, lembre-se de que ele age ou fala assim porque pensa que é apropriado. Não é possível que siga a sua opinião, mas a dele.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["pessoas", "empatia", "compreensão", "conflito"]
+    },
+    {
+      "id": "sen-cart-23",
+      "philosopher": "Sêneca",
+      "work": "Cartas a Lucílio",
+      "bookChapter": "Carta 107",
+      "theme": "destino e cooperação",
+      "originalText": "O destino conduz quem consente e arrasta quem resiste.",
+      "practicalDomains": ["pessoal", "empreendedor"],
+      "tags": ["destino", "aceitação", "resistência", "fluxo"]
+    },
+    {
+      "id": "rob-emp-02",
+      "philosopher": "Donald Robertson",
+      "work": "How to Think Like a Roman Emperor",
+      "bookChapter": "Cap. 6",
+      "theme": "dor e suportabilidade",
+      "originalText": "Marco Aurélio desenvolveu uma técnica para lidar com a dor: dividir a experiência no momento presente. A dor passada já se foi. A dor futura ainda não chegou. Resta apenas o instante atual, e o instante atual é sempre suportável.",
+      "practicalDomains": ["pessoal"],
+      "tags": ["dor", "presente", "técnica", "suportabilidade"]
+    },
+    {
+      "id": "irv-gbv-02",
+      "philosopher": "William B. Irvine",
+      "work": "A Guide to the Good Life",
+      "bookChapter": "Cap. 7",
+      "theme": "tricotomia do controle",
+      "originalText": "Irvine propõe uma atualização da dicotomia: em vez de duas categorias (controle total vs. nenhum controle), três: controle total, nenhum controle, e controle parcial. Na maioria das situações reais, temos controle parcial.",
+      "practicalDomains": ["pessoal", "empreendedor", "financeiro"],
+      "tags": ["controle", "atualização", "prática", "parcial"]
+    },
+    {
+      "id": "had-ex-02",
+      "philosopher": "Pierre Hadot",
+      "work": "A Cidadela Interior",
+      "bookChapter": "Cap. 3",
+      "theme": "três topos",
+      "originalText": "As três disciplinas de Epicteto — julgamento, desejo e ação — correspondem às três atividades fundamentais da alma: pensar, querer e agir. Toda a vida estoica se organiza ao redor desses três eixos.",
+      "practicalDomains": ["pessoal", "mentoria"],
+      "tags": ["disciplina", "alma", "estrutura", "prática"]
+    },
+    {
+      "id": "pig-hbs-02",
+      "philosopher": "Massimo Pigliucci",
+      "work": "How to Be a Stoic",
+      "bookChapter": "Cap. 5",
+      "theme": "jogar o melhor lance",
+      "originalText": "Crisipo comparava a vida a um jogo de dados: não controlamos o resultado do lançamento, mas controlamos como jogamos com os dados que recebemos. O sábio joga o melhor lance possível, sempre.",
+      "practicalDomains": ["empreendedor", "financeiro"],
+      "tags": ["sorte", "habilidade", "jogo", "estratégia"]
+    }
+  ]
+}

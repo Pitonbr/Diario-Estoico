@@ -1,0 +1,38 @@
+{
+  "name": "diario-estoico-agentes",
+  "version": "2.0.0",
+  "description": "Sistema multi-agente para geração e distribuição de conteúdo estoico em todas as plataformas",
+  "main": "dist/orchestrator/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsx src/orchestrator/index.ts",
+    "cafe": "tsx src/orchestrator/run-single.ts cafe",
+    "instagram": "tsx src/orchestrator/run-single.ts instagram",
+    "tiktok": "tsx src/orchestrator/run-single.ts tiktok",
+    "youtube": "tsx src/orchestrator/run-single.ts youtube",
+    "twitter": "tsx src/orchestrator/run-single.ts twitter",
+    "newsletter": "tsx src/orchestrator/run-single.ts newsletter",
+    "responses": "tsx src/orchestrator/run-single.ts responses",
+    "analytics": "tsx src/orchestrator/run-single.ts analytics",
+    "all-daily": "tsx src/orchestrator/daily-pipeline.ts",
+    "help": "tsx src/orchestrator/run-single.ts",
+    "seed": "tsx src/database/seed.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@react-email/components": "^0.0.31",
+    "@react-email/render": "^1.0.4",
+    "@supabase/supabase-js": "^2.49.1",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.4.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "resend": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^18.3.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

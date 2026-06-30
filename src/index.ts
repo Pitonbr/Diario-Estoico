@@ -15,6 +15,7 @@ import {
   getNextEditionNumber,
   getActiveSubscribers,
 } from "./database/queries";
+import { archiveNewsletter } from "./github/archive-newsletter";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -158,6 +159,21 @@ async function main() {
     }
 
     await markTeachingUsed(teachingKey);
+
+    // ── 4. Arquivar newsletter no GitHub ──
+    console.log("\n📁 Arquivando newsletter no GitHub...");
+    try {
+      await archiveNewsletter({
+        editionNumber,
+        sendDate: today,
+        philosopher,
+        sourceWork,
+        domain,
+        content,
+      });
+    } catch (err) {
+      console.warn("   ⚠️  Falha ao arquivar no GitHub (não bloqueia o pipeline):", err);
+    }
 
     // ── Resumo ──
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);

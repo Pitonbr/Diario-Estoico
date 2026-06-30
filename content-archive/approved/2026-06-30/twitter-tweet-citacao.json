@@ -1,0 +1,23 @@
+{
+  "id": "0b6cbd4e-9b28-44c2-ba35-1987d86d695f",
+  "agent": "twitter",
+  "platform": "twitter",
+  "format": "tweet",
+  "date": "2026-06-30",
+  "title": "Citação",
+  "body": "\"O que pode acontecer a qualquer um pode acontecer a cada um de nós.\" — Sêneca\n\nO seu negócio não é blindado. Sua saúde não é garantida. Sua equipe não é eterna.\n\nPense nisso enquanto ainda há tempo.",
+  "hashtags": [],
+  "cta": null,
+  "visualNotes": null,
+  "audioNotes": null,
+  "duration": null,
+  "slides": null,
+  "scheduledTime": "10:00",
+  "metadata": {
+    "slot": "citation"
+  },
+  "teachingKey": "sen-tranq-01",
+  "qualityRating": null,
+  "status": "approved",
+  "archivedAt": "2026-06-30T19:07:35.360Z"
+}

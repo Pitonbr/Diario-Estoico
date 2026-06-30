@@ -11,6 +11,7 @@
     "preview": "tsx src/preview.ts",
     "migrate": "tsx src/database/migrate.ts",
     "seed": "tsx src/database/seed.ts",
+    "snapshot": "tsx src/admin-metrics/compute-daily-snapshot.ts",
     "test": "tsx src/test.ts"
   },
   "keywords": ["stoicism", "newsletter", "daily", "philosophy"],

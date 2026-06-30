@@ -52,3 +52,26 @@ jobs:
         run: |
           echo "Pipeline executado em $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
           echo "Status: ${{ job.status }}"
+
+  compute-metrics-snapshot:
+    name: Calcular Indicadores Diários (Admin)
+    needs: send-newsletter
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: 📦 Instalar dependências
+        run: npm ci
+
+      - name: 📊 Calcular snapshot diário
+        run: npm run snapshot

@@ -1,0 +1,48 @@
+name: 📣 Diário Estoico — Conteúdo Orgânico Diário
+
+on:
+  schedule:
+    # 10:00 UTC = 07:00 BRT (horário de Brasília)
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+    # Permite execução manual para testes
+
+env:
+  ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+  TZ: America/Sao_Paulo
+
+jobs:
+  generate-content:
+    name: Gerar Conteúdo Multicanal
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: AGENTES DE MKT
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: AGENTES DE MKT/package-lock.json
+
+      - name: 📦 Instalar dependências
+        run: npm ci
+
+      - name: 📣 Gerar conteúdo do dia
+        run: npm run all-daily
+        env:
+          NODE_ENV: production
+
+      - name: 📊 Log de conclusão
+        if: always()
+        run: |
+          echo "Pipeline de conteúdo executado em $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          echo "Status: ${{ job.status }}"

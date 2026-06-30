@@ -1,5 +1,6 @@
 import { callClaude, parseClaudeJson } from "../config/claude-api";
 import { BRAND_SYSTEM_PROMPT, TIKTOK_GUIDELINES } from "./prompts/brand-voice";
+import { TIKTOK_PROMPT } from "./prompts/tiktok.prompt";
 import { DayContext, GeneratedContent, AgentResult } from "../config/types";
 
 interface TikTokOutput {
@@ -10,32 +11,15 @@ interface TikTokOutput {
 export async function runTikTokAgent(ctx: DayContext): Promise<AgentResult> {
   console.log("🎵 TikTok Agent: gerando roteiros...");
 
-  const prompt = `${BRAND_SYSTEM_PROMPT}\n\n${TIKTOK_GUIDELINES}
-
-═══ DADOS DO DIA ═══
-Ensinamento: "${ctx.teaching.originalText}" — ${ctx.teaching.philosopher}, ${ctx.teaching.work}
-Tema: ${ctx.teaching.theme} | Domínio: ${ctx.domain}
-Tendências: ${ctx.trendingTopics || "Nenhuma"}
-
-═══ TAREFA ═══
-Gere 2 roteiros de TikTok para Alex gravar. Formato JSON:
-
-{
-  "video1": {
-    "hook": "Pergunta/frase de impacto para os primeiros 2 segundos",
-    "script": "Roteiro completo (30-60s). Marcações: [PAUSA], [ZOOM], [TEXTO NA TELA: xxx]. Tom direto, emocional, estilo Andrea Vermont. O espectador deve sentir que esse vídeo foi feito PRA ELE.",
-    "visualNotes": "Formato sugerido: greenscreen/talking head/etc + transições",
-    "duration": "30s ou 60s",
-    "hashtags": ["#estoicismo", "#filosofia", "..."],
-    "soundSuggestion": "Tipo de som/música que combina (épica, calma, etc)"
-  },
-  "video2": { ... mesmo formato, ângulo diferente do ensinamento ... }
-}
-
-Video 1: abordagem EMOCIONAL (conectar com dor/desejo do público)
-Video 2: abordagem PRÁTICA (dica acionável em 30 segundos)
-
-RESPONDA APENAS COM O JSON.`;
+  const prompt = TIKTOK_PROMPT
+    .replace("{{BRAND_SYSTEM_PROMPT}}", BRAND_SYSTEM_PROMPT)
+    .replace("{{TIKTOK_GUIDELINES}}", TIKTOK_GUIDELINES)
+    .replace("{{CITACAO}}", ctx.teaching.originalText)
+    .replace("{{FILOSOFO}}", ctx.teaching.philosopher)
+    .replace("{{OBRA}}", ctx.teaching.work)
+    .replace("{{TEMA}}", ctx.teaching.theme)
+    .replace("{{DOMINIO}}", ctx.domain)
+    .replace("{{TENDENCIAS}}", ctx.trendingTopics || "Nenhuma");
 
   try {
     const raw = await callClaude(prompt, 2000);

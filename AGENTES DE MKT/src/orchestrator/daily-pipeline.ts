@@ -13,6 +13,7 @@ import { runTikTokAgent } from "../agents/tiktok-agent";
 import { runYouTubeAgent } from "../agents/youtube-agent";
 import { runTwitterAgent } from "../agents/twitter-agent";
 import { runCafeEstoicoAgent } from "../agents/cafe-estoico-agent";
+import { recordAgentContents } from "../database/queries";
 
 // Importações do diário estoico original (newsletter)
 import stoicLibrary from "../../data/stoic-library.json";
@@ -91,6 +92,7 @@ async function main() {
   const agentNames = ["cafe-estoico", "instagram", "tiktok", "youtube", "twitter"];
   let totalContents = 0;
   let errors = 0;
+  const recordPromises: Promise<void>[] = [];
 
   results.forEach((result, i) => {
     if (result.status === "fulfilled") {
@@ -111,11 +113,16 @@ async function main() {
 
         fs.writeFileSync(path.join(outputDir, readableFile), readable, "utf-8");
       }
+
+      // Registrar peças no painel admin (content_pieces)
+      recordPromises.push(recordAgentContents(agentNames[i], dateStr, agentResult));
     } else {
       errors++;
       console.error(`   ✗ ${agentNames[i]}: ${result.reason}`);
     }
   });
+
+  await Promise.allSettled(recordPromises);
 
   // ── 4. Gerar resumo diário ──
   const summary = {

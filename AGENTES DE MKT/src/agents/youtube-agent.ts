@@ -1,5 +1,6 @@
 import { callClaude, parseClaudeJson } from "../config/claude-api";
 import { BRAND_SYSTEM_PROMPT, YOUTUBE_GUIDELINES } from "./prompts/brand-voice";
+import { YOUTUBE_PROMPT, YOUTUBE_LONGFORM_SCHEMA } from "./prompts/youtube.prompt";
 import { DayContext, GeneratedContent, AgentResult } from "../config/types";
 
 interface YouTubeOutput {
@@ -14,38 +15,17 @@ interface YouTubeOutput {
 export async function runYouTubeAgent(ctx: DayContext, isLongformDay: boolean): Promise<AgentResult> {
   console.log("▶️  YouTube Agent: gerando roteiros...");
 
-  const prompt = `${BRAND_SYSTEM_PROMPT}\n\n${YOUTUBE_GUIDELINES}
-
-═══ DADOS DO DIA ═══
-Ensinamento: "${ctx.teaching.originalText}" — ${ctx.teaching.philosopher}, ${ctx.teaching.work}, ${ctx.teaching.bookChapter}
-Tema: ${ctx.teaching.theme} | Domínio: ${ctx.domain}
-Gerar long-form hoje: ${isLongformDay ? "SIM (1 vídeo de 8-12 min)" : "NÃO (apenas Short)"}
-
-═══ TAREFA ═══
-{
-  "short": {
-    "title": "Título SEO para YouTube Short (máx 60 chars, curiosidade + keyword)",
-    "script": "Roteiro de 30-60 segundos. Hook forte, 1 insight, CTA. Marcações [CORTE], [TEXTO NA TELA].",
-    "thumbnailText": "Texto para thumbnail (3-5 palavras de impacto)",
-    "hashtags": ["#shorts", "#estoicismo", "..."]
-  },
-  "longform": ${isLongformDay ? `{
-    "title": "Título SEO completo (curiosidade + keyword, ex: 'O que MARCO AURÉLIO ensinou sobre LIDERAR sob pressão')",
-    "description": "Descrição do vídeo (primeiras 2 linhas = gancho, depois link newsletter, depois resumo)",
-    "thumbnailText": "Texto da thumbnail (máx 5 palavras)",
-    "outline": [
-      {"timestamp": "0:00", "section": "Introdução/Hook", "content": "Roteiro detalhado desta seção (2-3 parágrafos)"},
-      {"timestamp": "2:00", "section": "Ponto 1: [nome]", "content": "Roteiro detalhado"},
-      {"timestamp": "5:00", "section": "Ponto 2: [nome]", "content": "Roteiro detalhado"},
-      {"timestamp": "8:00", "section": "Ponto 3: [nome]", "content": "Roteiro detalhado"},
-      {"timestamp": "10:00", "section": "Aplicação prática", "content": "Roteiro com exemplo real"},
-      {"timestamp": "11:00", "section": "Conclusão + CTA", "content": "Resumo + convite newsletter"}
-    ],
-    "tags": ["estoicismo", "filosofia", "marco aurelio", "..."]
-  }` : "null"}
-}
-
-RESPONDA APENAS COM O JSON.`;
+  const prompt = YOUTUBE_PROMPT
+    .replace("{{BRAND_SYSTEM_PROMPT}}", BRAND_SYSTEM_PROMPT)
+    .replace("{{YOUTUBE_GUIDELINES}}", YOUTUBE_GUIDELINES)
+    .replace("{{CITACAO}}", ctx.teaching.originalText)
+    .replace("{{FILOSOFO}}", ctx.teaching.philosopher)
+    .replace("{{OBRA}}", ctx.teaching.work)
+    .replace("{{CAPITULO}}", ctx.teaching.bookChapter)
+    .replace("{{TEMA}}", ctx.teaching.theme)
+    .replace("{{DOMINIO}}", ctx.domain)
+    .replace("{{IS_LONGFORM_DAY}}", isLongformDay ? "SIM (1 vídeo de 8-12 min)" : "NÃO (apenas Short)")
+    .replace("{{LONGFORM_SCHEMA}}", isLongformDay ? YOUTUBE_LONGFORM_SCHEMA : "null");
 
   try {
     const raw = await callClaude(prompt, 3000);

@@ -1,5 +1,6 @@
 import { callClaude, parseClaudeJson } from "../config/claude-api";
 import { BRAND_SYSTEM_PROMPT, TWITTER_GUIDELINES } from "./prompts/brand-voice";
+import { TWITTER_PROMPT, TWITTER_THREAD_SCHEMA } from "./prompts/twitter.prompt";
 import { DayContext, GeneratedContent, AgentResult } from "../config/types";
 
 interface TwitterOutput {
@@ -13,36 +14,18 @@ interface TwitterOutput {
 export async function runTwitterAgent(ctx: DayContext, isThreadDay: boolean): Promise<AgentResult> {
   console.log("🐦 Twitter/X Agent: gerando tweets...");
 
-  const prompt = `${BRAND_SYSTEM_PROMPT}\n\n${TWITTER_GUIDELINES}
-
-═══ DADOS DO DIA ═══
-Ensinamento: "${ctx.teaching.originalText}" — ${ctx.teaching.philosopher}, ${ctx.teaching.work}
-Tema: ${ctx.teaching.theme} | Domínio: ${ctx.domain}
-Gerar thread hoje: ${isThreadDay ? "SIM" : "NÃO"}
-Eventos: ${ctx.calendarEvents.map(e => e.name).join(", ") || "Nenhum"}
-Tendências: ${ctx.trendingTopics || "Nenhuma"}
-
-═══ TAREFA ═══
-{
-  "morningTweet": { "text": "Tweet matinal (máx 280 chars). Reflexão do dia, tom inspirador.", "hashtags": ["#estoicismo"] },
-  "citationTweet": { "text": "Citação estoica + aplicação em 1 frase (máx 280 chars)", "hashtags": [] },
-  "engagementTweet": { "text": "Pergunta provocadora para gerar respostas (máx 280 chars)", "hashtags": [] },
-  "eveningTweet": { "text": "Reflexão noturna ou dica prática para encerrar o dia (máx 280 chars)", "hashtags": [] },
-  "thread": ${isThreadDay ? `{
-    "tweets": [
-      "Tweet 1: Hook (curiosidade/polêmica, máx 280 chars)",
-      "Tweet 2: Contexto histórico (máx 280 chars)",
-      "Tweet 3: O ensinamento central (máx 280 chars)",
-      "Tweet 4: Aplicação prática moderna (máx 280 chars)",
-      "Tweet 5: Exemplo real de negócios/vida (máx 280 chars)",
-      "Tweet 6: Conclusão + CTA (assine o Diário Estoico, link na bio)"
-    ],
-    "hashtags": ["#estoicismo", "#filosofia"]
-  }` : "null"}
-}
-
-CADA tweet deve ter EXATAMENTE no máximo 280 caracteres.
-RESPONDA APENAS COM O JSON.`;
+  const prompt = TWITTER_PROMPT
+    .replace("{{BRAND_SYSTEM_PROMPT}}", BRAND_SYSTEM_PROMPT)
+    .replace("{{TWITTER_GUIDELINES}}", TWITTER_GUIDELINES)
+    .replace("{{CITACAO}}", ctx.teaching.originalText)
+    .replace("{{FILOSOFO}}", ctx.teaching.philosopher)
+    .replace("{{OBRA}}", ctx.teaching.work)
+    .replace("{{TEMA}}", ctx.teaching.theme)
+    .replace("{{DOMINIO}}", ctx.domain)
+    .replace("{{IS_THREAD_DAY}}", isThreadDay ? "SIM" : "NÃO")
+    .replace("{{EVENTOS}}", ctx.calendarEvents.map(e => e.name).join(", ") || "Nenhum")
+    .replace("{{TENDENCIAS}}", ctx.trendingTopics || "Nenhuma")
+    .replace("{{THREAD_SCHEMA}}", isThreadDay ? TWITTER_THREAD_SCHEMA : "null");
 
   try {
     const raw = await callClaude(prompt, 2000);

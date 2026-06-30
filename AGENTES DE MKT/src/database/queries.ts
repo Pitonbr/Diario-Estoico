@@ -1,5 +1,6 @@
 import { getSupabase } from "./client";
 import crypto from "crypto";
+import { AgentResult } from "../config/types";
 
 // ─── Tipos ───
 export interface SentNewsletter {
@@ -137,4 +138,63 @@ export async function markTeachingUsed(teachingKey: string): Promise<void> {
 // ─── Gerar hash de conteúdo ───
 export function generateContentHash(content: string): string {
   return crypto.createHash("sha256").update(content).digest("hex");
+}
+
+// ─── Registrar peça de conteúdo orgânico (Marketing / painel admin) ───
+export interface ContentPiece {
+  agent_key: string;
+  platform: string;
+  format: string;
+  generated_date: string;
+  title?: string | null;
+  body: string;
+  hashtags?: string[];
+  cta?: string | null;
+  visual_notes?: string | null;
+  audio_notes?: string | null;
+  duration?: string | null;
+  slides?: string[] | null;
+  scheduled_time?: string | null;
+  metadata?: Record<string, unknown>;
+  teaching_key?: string | null;
+}
+
+export async function recordContentPiece(piece: ContentPiece): Promise<void> {
+  const db = getSupabase();
+  const { error } = await db.from("content_pieces").insert(piece);
+
+  if (error) {
+    console.error(`   ✗ Falha ao registrar content_piece (${piece.agent_key}): ${error.message}`);
+  }
+}
+
+// ─── Registrar todas as peças de um AgentResult em content_pieces ───
+export async function recordAgentContents(
+  agentKey: string,
+  generatedDate: string,
+  result: AgentResult
+): Promise<void> {
+  if (result.status !== "success" || result.contents.length === 0) return;
+
+  await Promise.allSettled(
+    result.contents.map((content) =>
+      recordContentPiece({
+        agent_key: agentKey,
+        platform: content.platform,
+        format: content.format,
+        generated_date: generatedDate,
+        title: content.title,
+        body: content.body,
+        hashtags: content.hashtags,
+        cta: content.cta,
+        visual_notes: content.visualNotes,
+        audio_notes: content.audioNotes,
+        duration: content.duration,
+        slides: content.slides,
+        scheduled_time: content.scheduledTime,
+        metadata: content.metadata,
+        teaching_key: result.teachingKey,
+      })
+    )
+  );
 }

@@ -19,6 +19,7 @@ import { runTwitterAgent } from "../agents/twitter-agent";
 import { runNewsletterAgent } from "../agents/newsletter-agent";
 import { runResponseManager } from "../agents/response-manager";
 import { runAnalyticsAgent } from "../agents/analytics-agent";
+import { recordAgentContents } from "../database/queries";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -63,7 +64,7 @@ async function buildContext(): Promise<DayContext> {
   };
 }
 
-function saveResult(agentName: string, result: AgentResult) {
+async function saveResult(agentName: string, result: AgentResult) {
   const dateStr = dayjs().tz(config.timezone).format("YYYY-MM-DD");
   const outputDir = path.join(process.cwd(), "output", dateStr);
   fs.mkdirSync(outputDir, { recursive: true });
@@ -92,6 +93,8 @@ function saveResult(agentName: string, result: AgentResult) {
 
     fs.writeFileSync(path.join(outputDir, `${agentName}-roteiros.txt`), readable, "utf-8");
   }
+
+  await recordAgentContents(agentName, dateStr, result);
 
   console.log(`\n📂 Output salvo em: output/${dateStr}/${agentName}*`);
 }
@@ -126,12 +129,12 @@ Agentes disponíveis:
   // Agentes que não precisam de contexto do dia
   if (agentName === "responses") {
     result = await runResponseManager();
-    saveResult("response-manager", result);
+    await saveResult("response-manager", result);
     return;
   }
   if (agentName === "analytics") {
     result = await runAnalyticsAgent();
-    saveResult("analytics", result);
+    await saveResult("analytics", result);
     return;
   }
 
@@ -147,27 +150,27 @@ Agentes disponíveis:
   switch (agentName) {
     case "cafe":
       result = await runCafeEstoicoAgent(ctx);
-      saveResult("cafe-estoico", result);
+      await saveResult("cafe-estoico", result);
       break;
     case "instagram":
       result = await runInstagramAgent(ctx);
-      saveResult("instagram", result);
+      await saveResult("instagram", result);
       break;
     case "tiktok":
       result = await runTikTokAgent(ctx);
-      saveResult("tiktok", result);
+      await saveResult("tiktok", result);
       break;
     case "youtube":
       result = await runYouTubeAgent(ctx, isLongformDay);
-      saveResult("youtube", result);
+      await saveResult("youtube", result);
       break;
     case "twitter":
       result = await runTwitterAgent(ctx, isThreadDay);
-      saveResult("twitter", result);
+      await saveResult("twitter", result);
       break;
     case "newsletter":
       result = await runNewsletterAgent(ctx, true);
-      saveResult("newsletter", result);
+      await saveResult("newsletter", result);
       break;
     default:
       console.error(`❌ Agente desconhecido: ${agentName}`);

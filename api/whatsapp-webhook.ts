@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { validateSignup } from "../src/security/signup-validator";
 
 const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN || "";
 
@@ -58,17 +59,30 @@ export default async function handler(req: any, res: any) {
           const phone = msg.from;
           const name = value.contacts?.[0]?.profile?.name ?? null;
 
+          const validation = validateSignup(null, phone);
+          const approvalStatus = validation.shouldPend ? "pending" : "approved";
+          const approvedAt = validation.shouldPend ? null : new Date().toISOString();
+
           const { error } = await supabase
             .from("subscribers")
             .upsert(
-              { channel: "whatsapp", phone, name, active: true },
+              {
+                channel: "whatsapp",
+                phone,
+                name,
+                active: !validation.shouldPend,
+                approval_status: approvalStatus,
+                approved_at: approvedAt,
+                signup_risk_score: validation.riskScore,
+                risk_notes: validation.riskNotes,
+              },
               { onConflict: "phone" }
             );
 
           if (error) {
             console.error("Erro ao cadastrar inscrito:", error.message);
           } else {
-            console.log(`[CADASTRO] Novo inscrito via WhatsApp: ${phone} (${name})`);
+            console.log(`[CADASTRO] ${phone} (${name}) | risco: ${validation.riskScore} | status: ${approvalStatus}`);
           }
         }
       }

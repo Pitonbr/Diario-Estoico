@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { checkIntegrations } from "@/lib/integrations";
 
+export const dynamic = "force-dynamic";
+
 const STATUS_CONFIG = {
   ok:      { label: "OK",        color: "bg-green-100 text-green-700",  dot: "bg-green-500" },
   error:   { label: "Erro",      color: "bg-red-100 text-red-700",      dot: "bg-red-500" },

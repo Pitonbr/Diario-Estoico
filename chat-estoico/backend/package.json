@@ -1,0 +1,30 @@
+{
+  "name": "chat-estoico-backend",
+  "version": "1.0.0",
+  "description": "Backend do Chat Estoico — motor socrático de conversação com IA fundamentada em estoicismo",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "migrate": "tsx src/database/migrate.ts",
+    "seed-embeddings": "tsx src/database/seed-embeddings.ts",
+    "test-engine": "tsx src/engine/test-conversation.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@fastify/cors": "^10.0.0",
+    "@fastify/rate-limit": "^10.0.0",
+    "@supabase/supabase-js": "^2.49.1",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.4.7",
+    "fastify": "^5.2.0",
+    "openai": "^4.77.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

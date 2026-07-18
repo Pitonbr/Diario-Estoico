@@ -6,4 +6,5 @@ preview.html
 .DS_Store
 .vercel
 .env*
+!.env.example
 output/

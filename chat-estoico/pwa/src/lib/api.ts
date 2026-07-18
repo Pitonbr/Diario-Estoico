@@ -1,4 +1,4 @@
-const API_BASE = "/api";
+const API_BASE = (import.meta as Record<string, Record<string,string>>).env?.VITE_API_URL ?? "/api";
 
 export interface OnboardingQuestion {
   id: string;

@@ -9,7 +9,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const { email, authId, answers, displayName, termsAccepted, privacyAccepted } = req.body || {};
+  const { email, answers, displayName, termsAccepted, privacyAccepted } = req.body || {};
 
   if (!email || !answers || !displayName || termsAccepted !== true || privacyAccepted !== true) {
     return res.status(400).json({ error: "Dados inválidos" });
@@ -45,11 +45,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const { communicationStyle, lifeContext } = buildInitialProfile(answers);
-  await db.from("user_profiles").upsert(
+  const { error: profileErr } = await db.from("user_profiles").upsert(
     { user_id: userId, onboarding_answers: answers,
       communication_style: communicationStyle, life_context: lifeContext },
     { onConflict: "user_id" }
-  ).catch((e: Error) => console.warn("[onboarding/submit] user_profiles upsert:", e?.message));
+  );
+  if (profileErr) console.warn("[onboarding/submit] user_profiles upsert:", profileErr.message);
 
   res.json({ userId, profile: { communicationStyle, lifeContext } });
 }

@@ -60,8 +60,8 @@ export async function retrieveTeachings(
   }
 
   // Ranking com boost de afinidade
-  const totalAffinityVotes = Object.values(affinity.philosophers).reduce((a, b) => a + b, 0) +
-    Object.values(affinity.themes).reduce((a, b) => a + b, 0);
+  const totalAffinityVotes = Object.values(affinity.philosophers || {}).reduce((a, b) => a + b, 0) +
+    Object.values(affinity.themes || {}).reduce((a, b) => a + b, 0);
 
   const ranked = data
     .map(t => {

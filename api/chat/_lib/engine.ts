@@ -141,9 +141,16 @@ export async function loadProfile(userId: string): Promise<ProfileContext> {
   ]);
 
   const lifeContext = (profile?.life_context || {}) as Record<string, unknown>;
-  const affinity = (profile?.philosophical_affinity || { philosophers: {}, themes: {} }) as {
-    philosophers: Record<string, number>;
-    themes: Record<string, number>;
+  // Fallback explícito para cada chave: philosophical_affinity pode ser {} no banco
+  // para novos usuários, o que deixaria philosophers/themes como undefined e
+  // causaria TypeError em Object.values(undefined) no rag.ts
+  const rawAff = (profile?.philosophical_affinity || {}) as {
+    philosophers?: Record<string, number>;
+    themes?: Record<string, number>;
+  };
+  const affinity = {
+    philosophers: rawAff.philosophers || {},
+    themes: rawAff.themes || {},
   };
 
   const stoicFamiliarity = (lifeContext.stoic_familiarity as string) || "iniciante";

@@ -35,6 +35,22 @@ export default async function AdminPage() {
       badge: null,
       badgeColor: "",
     },
+    {
+      href: "/admin/convites",
+      emoji: "🎁",
+      label: "Convidar Usuário",
+      description: "Crie convites presentes: acesso gratuito ao Chat ou Newsletter por 7 ou 30 dias",
+      badge: null,
+      badgeColor: "",
+    },
+    {
+      href: "/admin/redes-sociais",
+      emoji: "📱",
+      label: "Redes Sociais",
+      description: "Atualize os seguidores de cada plataforma manualmente para o Dashboard",
+      badge: null,
+      badgeColor: "",
+    },
   ];
 
   return (
@@ -42,7 +58,7 @@ export default async function AdminPage() {
       <h1 className="mb-2 text-2xl font-semibold text-stone-900">Admin</h1>
       <p className="mb-8 text-sm text-stone-500">Configurações gerais, assinantes e saúde do sistema</p>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((card) => (
           <Link
             key={card.href}

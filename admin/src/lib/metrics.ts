@@ -1,5 +1,29 @@
 import { createClient } from "@/lib/supabase/server";
 
+export interface SocialMetric {
+  platform: string;
+  followers: number;
+  handle: string | null;
+  profile_url: string | null;
+  updated_at: string;
+}
+
+export interface UnifiedDashboardMetrics {
+  // Newsletter
+  activeSubscribers: number;
+  newSubscribersThisMonth: number;
+  churnedThisMonth: number;
+  // Chat
+  activeChatUsers: number;
+  newChatUsersThisMonth: number;
+  chatInactive15d: number;
+  chatInactive30d: number;
+  // Combined
+  totalUsers: number;
+  // Social
+  social: SocialMetric[];
+}
+
 type SupabaseClient = Awaited<ReturnType<typeof createClient>>;
 
 const METRIC_KEYS = {
@@ -143,4 +167,77 @@ export async function getCampaignCacSummary(): Promise<CampaignCac[]> {
   }
 
   return results;
+}
+
+export async function getSocialMetrics(): Promise<SocialMetric[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("social_metrics")
+    .select("platform, followers, handle, profile_url, updated_at")
+    .order("platform");
+  return (data ?? []) as SocialMetric[];
+}
+
+export async function getUnifiedDashboardMetrics(): Promise<UnifiedDashboardMetrics> {
+  const supabase = await createClient();
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+  const d15 = new Date(now.getTime() - 15 * 24 * 60 * 60 * 1000).toISOString();
+  const d30 = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString();
+
+  const [
+    { count: activeSubscribers },
+    { count: newSubscribersThisMonth },
+    { count: churnedThisMonth },
+    { count: activeChatUsers },
+    { count: newChatUsersThisMonth },
+    social,
+  ] = await Promise.all([
+    supabase.from("subscribers").select("id", { count: "exact", head: true }).eq("active", true),
+    supabase.from("subscribers").select("id", { count: "exact", head: true }).gte("created_at", monthStart),
+    supabase.from("subscribers").select("id", { count: "exact", head: true })
+      .gte("unsubscribed_at", monthStart).not("unsubscribed_at", "is", null),
+    supabase.from("chat_users").select("id", { count: "exact", head: true }).is("blocked_at", null),
+    supabase.from("chat_users").select("id", { count: "exact", head: true }).gte("created_at", monthStart),
+    getSocialMetrics(),
+  ]);
+
+  // Inactive chat users: no conversation in last 15/30 days
+  const [{ data: rows15 }, { data: rows30 }] = await Promise.all([
+    supabase.from("conversations").select("user_id").gte("started_at", d15),
+    supabase.from("conversations").select("user_id").gte("started_at", d30),
+  ]);
+  const active15Ids = [...new Set((rows15 ?? []).map((r) => r.user_id))];
+  const active30Ids = [...new Set((rows30 ?? []).map((r) => r.user_id))];
+
+  const base15 = supabase
+    .from("chat_users").select("id", { count: "exact", head: true })
+    .is("blocked_at", null).lt("created_at", d15);
+  const base30 = supabase
+    .from("chat_users").select("id", { count: "exact", head: true })
+    .is("blocked_at", null).lt("created_at", d30);
+
+  const [{ count: chatInactive15d }, { count: chatInactive30d }] = await Promise.all([
+    active15Ids.length > 0
+      ? base15.not("id", "in", `(${active15Ids.join(",")})`)
+      : base15,
+    active30Ids.length > 0
+      ? base30.not("id", "in", `(${active30Ids.join(",")})`)
+      : base30,
+  ]);
+
+  const ns = activeSubscribers ?? 0;
+  const nc = activeChatUsers ?? 0;
+
+  return {
+    activeSubscribers: ns,
+    newSubscribersThisMonth: newSubscribersThisMonth ?? 0,
+    churnedThisMonth: churnedThisMonth ?? 0,
+    activeChatUsers: nc,
+    newChatUsersThisMonth: newChatUsersThisMonth ?? 0,
+    chatInactive15d: chatInactive15d ?? 0,
+    chatInactive30d: chatInactive30d ?? 0,
+    totalUsers: ns + nc,
+    social,
+  };
 }

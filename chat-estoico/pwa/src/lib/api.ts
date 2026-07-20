@@ -34,6 +34,7 @@ export async function submitOnboarding(payload: {
   displayName: string;
   termsAccepted: true;
   privacyAccepted: true;
+  giftToken?: string;
 }): Promise<{ userId: string }> {
   const res = await fetch(`${API_BASE}/onboarding/submit`, {
     method: "POST",

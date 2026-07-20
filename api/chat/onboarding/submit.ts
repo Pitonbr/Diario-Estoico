@@ -9,7 +9,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const { email, answers, displayName, termsAccepted, privacyAccepted } = req.body || {};
+  const { email, answers, displayName, termsAccepted, privacyAccepted, giftToken } = req.body || {};
 
   if (!email || !answers || !displayName || termsAccepted !== true || privacyAccepted !== true) {
     return res.status(400).json({ error: "Dados inválidos" });
@@ -51,6 +51,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     { onConflict: "user_id" }
   );
   if (profileErr) console.warn("[onboarding/submit] user_profiles upsert:", profileErr.message);
+
+  // Activate gift invite if token present
+  if (giftToken) {
+    const { data: invite } = await db
+      .from("gift_invites")
+      .select("id, duration_days, status")
+      .eq("token", giftToken)
+      .single();
+
+    if (invite && invite.status === "pending") {
+      const trialExpiresAt = new Date(
+        Date.now() + invite.duration_days * 24 * 60 * 60 * 1000
+      ).toISOString();
+
+      await Promise.all([
+        db.from("chat_users")
+          .update({
+            plan: "premium",
+            trial_expires_at: trialExpiresAt,
+            gift_invite_id: invite.id,
+          })
+          .eq("id", userId),
+        db.from("gift_invites")
+          .update({
+            status: "activated",
+            activated_at: new Date().toISOString(),
+            activated_user_id: userId,
+            expires_at: trialExpiresAt,
+          })
+          .eq("id", invite.id),
+      ]);
+    }
+  }
 
   res.json({ userId, profile: { communicationStyle, lifeContext } });
 }

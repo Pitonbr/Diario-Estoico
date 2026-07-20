@@ -15,9 +15,13 @@ export default function OnboardingPage() {
   const [displayName, setDisplayName] = useState("");
   const [termsChecked, setTermsChecked] = useState(false);
   const [privacyChecked, setPrivacyChecked] = useState(false);
+  const [giftToken, setGiftToken] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     fetchOnboardingQuestions().then((data) => setQuestions(data.questions));
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("gift");
+    if (token) setGiftToken(token);
   }, []);
 
   const handleSelect = (qId: string, value: string, type: "single" | "multi") => {
@@ -55,6 +59,7 @@ export default function OnboardingPage() {
           displayName,
           termsAccepted: true,
           privacyAccepted: true,
+          ...(giftToken ? { giftToken } : {}),
         });
         if (!result.userId || typeof result.userId !== "string") {
           throw new Error("userId inválido retornado pelo servidor");

@@ -7,6 +7,14 @@ const NAV_ITEMS = [
   { href: "/admin", label: "Admin", icon: "⚙️" },
 ];
 
+const CHAT_ITEMS = [
+  { href: "/chat", label: "Visão geral", icon: "🏛️" },
+  { href: "/chat/alertas", label: "Alertas", icon: "🚨" },
+  { href: "/chat/usuarios", label: "Usuários", icon: "👥" },
+  { href: "/chat/analytics", label: "Analytics", icon: "📈" },
+  { href: "/chat/financeiro", label: "Financeiro", icon: "💳" },
+];
+
 export function Sidebar() {
   return (
     <aside className="w-60 shrink-0 border-r border-stone-200 bg-white p-4">
@@ -16,6 +24,23 @@ export function Sidebar() {
       </div>
       <nav className="flex flex-col gap-1">
         {NAV_ITEMS.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="rounded-md px-3 py-2 text-sm font-medium text-stone-700 hover:bg-stone-100"
+          >
+            <span className="mr-2">{item.icon}</span>
+            {item.label}
+          </Link>
+        ))}
+
+        <div className="my-3 border-t border-stone-100" />
+
+        <p className="mb-1 px-3 text-xs font-semibold uppercase tracking-wider text-stone-400">
+          Chat Estoico
+        </p>
+
+        {CHAT_ITEMS.map((item) => (
           <Link
             key={item.href}
             href={item.href}

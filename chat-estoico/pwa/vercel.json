@@ -3,6 +3,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://diario-estoico-henna.vercel.app/api/chat/:path*"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ]
 }

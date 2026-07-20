@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchOnboardingQuestions, submitOnboarding, OnboardingQuestion } from "../lib/api";
 import { TERMS_TEXT, PRIVACY_TEXT } from "../lib/legal-texts";
 
-type Step = "terms" | "email" | "quiz" | "submitting";
+type Step = "terms" | "email" | "quiz" | "submitting" | "error";
 
 export default function OnboardingPage() {
   const navigate = useNavigate();
@@ -56,12 +56,15 @@ export default function OnboardingPage() {
           termsAccepted: true,
           privacyAccepted: true,
         });
+        if (!result.userId || typeof result.userId !== "string") {
+          throw new Error("userId inválido retornado pelo servidor");
+        }
         localStorage.setItem("chatestoico_userId", result.userId);
         localStorage.setItem("chatestoico_name", displayName);
         navigate("/chat");
-      } catch {
-        alert("Erro ao criar seu perfil. Tente novamente.");
-        setStep("quiz");
+      } catch (err) {
+        console.error("[Onboarding] Erro:", err);
+        setStep("error");
       }
     }
   };
@@ -124,6 +127,21 @@ export default function OnboardingPage() {
     return (
       <div className="onboarding-shell" style={{ textAlign: "center" }}>
         <p className="thinking">Preparando seu espaço de reflexão</p>
+      </div>
+    );
+  }
+
+  // ═══ TELA DE ERRO ═══
+  if (step === "error") {
+    return (
+      <div className="onboarding-shell" style={{ textAlign: "center" }}>
+        <h1 className="onboarding-question" style={{ fontSize: "24px" }}>Algo deu errado</h1>
+        <p style={{ color: "var(--texto-suave)", marginBottom: "24px", fontSize: "15px", lineHeight: 1.6 }}>
+          Não conseguimos criar seu perfil. Isso pode ser uma instabilidade temporária. Tente novamente em instantes.
+        </p>
+        <button className="primary-btn" onClick={() => setStep("quiz")}>
+          Tentar novamente
+        </button>
       </div>
     );
   }

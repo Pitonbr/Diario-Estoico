@@ -19,21 +19,37 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const preferredLanguage = (answers["q1_language"] as string) || "pt-BR";
   const now = new Date().toISOString();
 
-  const { data: user, error } = await db.from("chat_users").upsert(
-    { email, auth_id: authId, display_name: displayName, preferred_language: preferredLanguage,
-      terms_accepted_at: now, terms_version: "1.0.0", privacy_accepted_at: now,
-      onboarding_completed_at: now },
-    { onConflict: "email" }
-  ).select().single();
+  // Tenta upsert; se falhar, tenta buscar o usuário existente pelo email
+  let userId: string | null = null;
+  {
+    const { data: upserted, error: upsertErr } = await db.from("chat_users").upsert(
+      { email, display_name: displayName, preferred_language: preferredLanguage,
+        terms_accepted_at: now, terms_version: "1.0.0", privacy_accepted_at: now,
+        onboarding_completed_at: now },
+      { onConflict: "email" }
+    ).select("id").single();
 
-  if (error || !user) return res.status(500).json({ error: "Erro ao criar usuário" });
+    if (upserted?.id) {
+      userId = upserted.id;
+    } else {
+      // Upsert retornou vazio (versão do Supabase JS com comportamento de update sem retorno)
+      console.warn("[onboarding/submit] upsert sem retorno, buscando por email:", upsertErr?.message);
+      const { data: existing } = await db.from("chat_users")
+        .select("id").eq("email", email).single();
+      userId = existing?.id ?? null;
+    }
+  }
+
+  if (!userId) {
+    return res.status(500).json({ error: "Não foi possível criar ou recuperar o usuário" });
+  }
 
   const { communicationStyle, lifeContext } = buildInitialProfile(answers);
   await db.from("user_profiles").upsert(
-    { user_id: user.id, onboarding_answers: answers,
+    { user_id: userId, onboarding_answers: answers,
       communication_style: communicationStyle, life_context: lifeContext },
     { onConflict: "user_id" }
-  );
+  ).catch((e: Error) => console.warn("[onboarding/submit] user_profiles upsert:", e?.message));
 
-  res.json({ userId: user.id, profile: { communicationStyle, lifeContext } });
+  res.json({ userId, profile: { communicationStyle, lifeContext } });
 }
